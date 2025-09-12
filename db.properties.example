@@ -1,0 +1,4 @@
+user=your_username
+password=your_password
+dburl=jdbc:mysql://localhost:3306/your_bd
+useSSL=false
