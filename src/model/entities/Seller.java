@@ -1,32 +1,37 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Seller {
-	private Integer Id;
+public class Seller implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private Integer id;
 	private String name;
 	private String email;
 	private LocalDate birthDate;
 	private Double baseSalary;
 	
+	private Department department;
+	
 	public Seller() {
 	}
 
 	public Seller(Integer id, String name, String email, LocalDate birthDate, Double baseSalary) {
-		Id = id;
+		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.birthDate = birthDate;
 		this.baseSalary = baseSalary;
 	}
 
-	public Integer getId() {
-		return Id;
+	public Integer getid() {
+		return id;
 	}
 
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -60,10 +65,18 @@ public class Seller {
 	public void setBaseSalary(Double baseSalary) {
 		this.baseSalary = baseSalary;
 	}
+	
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Id, baseSalary, birthDate, email, name);
+		return Objects.hash(id, baseSalary, birthDate, email, name);
 	}
 
 	@Override
@@ -75,20 +88,14 @@ public class Seller {
 		if (getClass() != obj.getClass())
 			return false;
 		Seller other = (Seller) obj;
-		return Objects.equals(Id, other.Id) && Objects.equals(baseSalary, other.baseSalary)
+		return Objects.equals(id, other.id) && Objects.equals(baseSalary, other.baseSalary)
 				&& Objects.equals(birthDate, other.birthDate) && Objects.equals(email, other.email)
 				&& Objects.equals(name, other.name);
 	}
 
 	@Override
 	public String toString() {
-		return "Seller [Id=" + Id + ", name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", baseSalary="
+		return "Seller [Id=" + id + ", name=" + name + ", email=" + email + ", birthDate=" + birthDate + ", baseSalary="
 				+ baseSalary + "]";
 	}
-	
-	
-	
-	
-	
-
 }
