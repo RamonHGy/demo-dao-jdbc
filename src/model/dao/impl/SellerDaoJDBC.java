@@ -36,7 +36,7 @@ public class SellerDaoJDBC implements SellerDao {
 			pst.setInt(5, obj.getDepartment().getId());
 
 			int rowsAffected = pst.executeUpdate();
-			
+
 			if (rowsAffected > 0) {
 				ResultSet rs = pst.getGeneratedKeys();
 				if (rs.next()) {
@@ -51,8 +51,7 @@ public class SellerDaoJDBC implements SellerDao {
 		} catch (SQLException e) {
 			// TODO: handle exception
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(pst);
 		}
 	}
@@ -72,7 +71,41 @@ public class SellerDaoJDBC implements SellerDao {
 	@Override
 	public Seller findById(Integer id) {
 		// TODO Auto-generated method stub
-		return null;
+		Seller seller = null;
+		ResultSet rs = null;
+		PreparedStatement pst = null;
+		String sql = "SELECT seller.*, department.Name as DepName " + "FROM seller " + "INNER JOIN department "
+				+ "ON seller.DepartmentId = department.Id " + "WHERE seller.Id = ?";
+
+		try {
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+
+			if (rs.next()) {
+				Department dep = new Department();
+				dep.setId(rs.getInt("DepartmentId"));
+				dep.setName(rs.getString("DepName"));
+
+				seller = new Seller();
+				seller.setId(rs.getInt("Id"));
+				seller.setEmail(rs.getString("Email"));
+				seller.setName(rs.getString("Name"));
+				seller.setBirthDate(rs.getDate("birthDate"));
+				seller.setBaseSalary(rs.getDouble("BaseSalary"));
+				seller.setDepartment(dep);
+				return seller;
+			} else {
+				return null;
+			}
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeStatement(pst);
+		}
 	}
 
 	@Override
