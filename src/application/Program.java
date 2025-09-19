@@ -31,8 +31,15 @@ public class Program {
 		}
 		
 		System.out.println("\n=== Teste 4 Seller insert ==== ");
-		Seller testSeller = new Seller(null, "Hornet silva", "hornet@gmail.com", new Date(), 1250.00, department);
+		Seller testSeller	 = new Seller(null, "Hornet silva", "hornet@gmail.com", new Date(), 1250.00, department);
 		sellerDao.insert(testSeller);
 		System.out.println("Inserted! new id = " + testSeller.getId());
+		
+		
+		System.out.println("\n=== Teste 5 Seller update ==== ");
+		seller = sellerDao.findById(1);
+		seller.setName("Lionel messi");
+		sellerDao.update(seller);
+		System.out.println("Update completed = " + seller);
 	}
 }

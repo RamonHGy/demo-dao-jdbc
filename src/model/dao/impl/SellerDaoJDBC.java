@@ -28,6 +28,7 @@ public class SellerDaoJDBC implements SellerDao {
 	public void insert(Seller obj) {
 		String sql = "INSERT INTO seller(Name, Email, BirthDate, BaseSalary, DepartmentId)" + "VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		// TODO Auto-generated method stub
 		try {
 			pst = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -40,7 +41,7 @@ public class SellerDaoJDBC implements SellerDao {
 			int rowsAffected = pst.executeUpdate();
 
 			if (rowsAffected > 0) {
-				ResultSet rs = pst.getGeneratedKeys();
+				rs = pst.getGeneratedKeys();
 				if (rs.next()) {
 					int id = rs.getInt(1);
 					obj.setId(id);
@@ -75,18 +76,6 @@ public class SellerDaoJDBC implements SellerDao {
 			pst.setInt(5, obj.getDepartment().getId());
 			pst.setInt(6, obj.getId());
 
-			int rowsAffected = pst.executeUpdate();
-
-			if (rowsAffected > 0) {
-				ResultSet rs = pst.getGeneratedKeys();
-				if (rs.next()) {
-					int id = rs.getInt(1);
-					obj.setId(id);
-				}
-				DB.closeResultSet(rs);
-			} else {
-				throw new DbException("Unexpected error! No rows affected!");
-			}
 
 		} catch (SQLException e) {
 			// TODO: handle exception
