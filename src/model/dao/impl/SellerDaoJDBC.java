@@ -75,7 +75,7 @@ public class SellerDaoJDBC implements SellerDao {
 			pst.setDouble(4, obj.getBaseSalary());
 			pst.setInt(5, obj.getDepartment().getId());
 			pst.setInt(6, obj.getId());
-
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -89,8 +89,22 @@ public class SellerDaoJDBC implements SellerDao {
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
+		PreparedStatement pst = null;
+		String sql = "DELETE FROM seller WHERE id = ? ";
 		
-		
+		try {
+			pst = conn.prepareStatement(sql);
+			pst.setInt(1,id);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(pst);
+		}
 
 	}
 
