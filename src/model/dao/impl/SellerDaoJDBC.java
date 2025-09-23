@@ -89,6 +89,8 @@ public class SellerDaoJDBC implements SellerDao {
 	@Override
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
+		
+		
 
 	}
 
